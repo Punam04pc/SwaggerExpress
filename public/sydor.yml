@@ -1,0 +1,125 @@
+openapi: 3.0.0
+info:
+  title: CLPL_SA
+  version: 3.0.0
+servers:
+  - url: 'https://api-connect-dev.excellonconnect.com'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []      
+paths:
+  /v1.0/whoami:
+    get:
+      tags:
+        - RestPassword
+      summary: WhoAmI
+      parameters:
+        - name: ClientId
+          in: header
+          schema:
+            type: string
+          example: 3b395214-7b3c-beab-3ce2-5a80e7455b0c
+        - name: ClientSecret
+          in: header
+          schema:
+            type: string
+          example: 3b395214-7b3c-beab-3ce2-5a80e7455b0c
+        - name: BaseURL
+          in: header
+          schema:
+            type: string
+          example: 'https://api-connect-dev.excellonconnect.com/v1.0/'
+        - name: SubscriptionName
+          in: query
+          schema:
+            type: string
+          example: CLPL
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1.0/ThirdParty/RequestVerification:
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - RestPassword
+      summary: RequestVerification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                LoginName: onkar.espl
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1.0/ThirdParty/PerformVerification:
+    post:
+      tags:
+        - RestPassword
+      summary: PerformVerification
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                VerificationCode: '999999'
+                LoginName: onkar.espl
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1.0/ThirdParty/ResetPassword:
+    post:
+      tags:
+        - RestPassword
+      summary: ResetPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                LoginName: onkar.espl
+                Password: '123'
+                ConfirmPassword: '123'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /v1.0/ThirdParty/Authentication:
+    post:
+      tags:
+        - Login
+      summary: Authentication (Login)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                LoginName: onkar.espl
+                Password: '123'
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
